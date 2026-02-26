@@ -7,9 +7,8 @@ public class StorageImpl implements Storage {
     private final Map<String, String> storage = new HashMap<>();
 
     @Override
-    public boolean update(String fruit, String quantity) {
-        String result = storage.put(fruit, quantity);
-        return result != null && result.equals(quantity);
+    public void update(String fruit, String quantity) {
+        storage.put(fruit, quantity);
     }
 
     @Override
