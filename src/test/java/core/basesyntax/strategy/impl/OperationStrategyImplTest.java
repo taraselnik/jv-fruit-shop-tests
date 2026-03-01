@@ -34,12 +34,12 @@ class OperationStrategyImplTest {
     }
 
     @Test
-    void operationStrategyImplTest_nullOperationHandlers_notOk() {
+    void constructor_nullOperationHandlers_notOk() {
         assertThrows(IllegalArgumentException.class, () -> new OperationStrategyImpl(null));
     }
 
     @Test
-    void operationStrategyImplTest_emptyOperationHandlers_notOk() {
+    void constructor_emptyOperationHandlers_notOk() {
         Map<FruitTransaction.Operation, OperationHandler> operationHandlers = Map.of();
         assertThrows(IllegalArgumentException.class,
                 () -> new OperationStrategyImpl(operationHandlers));
@@ -50,6 +50,16 @@ class OperationStrategyImplTest {
         OperationHandler operationBalanceHandler =
                 operationStrategyImpl.getOperationHandler(FruitTransaction.Operation.BALANCE);
         assertEquals(BalanceOperation.class, operationBalanceHandler.getClass());
+    }
+
+    @Test
+    void getOperationHandler_handlerNotFound_notOk() {
+        Map<FruitTransaction.Operation, OperationHandler> operationHandlers =
+                Map.of(FruitTransaction.Operation.BALANCE, new BalanceOperation());
+        OperationStrategyImpl operationStrategyImpl = new OperationStrategyImpl(operationHandlers);
+        assertThrows(IllegalArgumentException.class,
+                () -> operationStrategyImpl.getOperationHandler(
+                        FruitTransaction.Operation.PURCHASE));
     }
 
     @Test
