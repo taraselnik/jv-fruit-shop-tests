@@ -42,7 +42,7 @@ public class DataConverterImpl implements DataConverter {
         return transactions;
     }
 
-    private FruitTransaction.Operation parseOperation(String code) {
+    FruitTransaction.Operation parseOperation(String code) {
         for (FruitTransaction.Operation operation : FruitTransaction.Operation.values()) {
             if (operation.getCode().equals(code)) {
                 return operation;
