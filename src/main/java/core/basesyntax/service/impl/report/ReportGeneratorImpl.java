@@ -2,6 +2,8 @@ package core.basesyntax.service.impl.report;
 
 import core.basesyntax.dao.FruitDao;
 import core.basesyntax.service.ReportGenerator;
+import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class ReportGeneratorImpl implements ReportGenerator {
@@ -14,6 +16,7 @@ public class ReportGeneratorImpl implements ReportGenerator {
         String reportHeader = "fruit,quantity\n";
         String reportBody;
         reportBody = fruitDao.getAll().entrySet().stream()
+                .sorted(Comparator.comparing(entry -> new BigDecimal(entry.getValue())))
                 .map(entry -> entry.getKey() + "," + entry.getValue())
                 .collect(Collectors.joining("\n"));
         return reportHeader + reportBody;
